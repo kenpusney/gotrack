@@ -11,8 +11,8 @@ type kaJSModel struct {
 	Host string
 }
 
-func setupScript() {
-	http.HandleFunc("/ka.js", func(w http.ResponseWriter, r *http.Request) {
+func setupScript(endpoint string) {
+	http.HandleFunc(endpoint, func(w http.ResponseWriter, r *http.Request) {
 		query := r.URL.Query()
 		host := r.Host
 		ID := query.Get("id")

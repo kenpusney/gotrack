@@ -24,7 +24,8 @@ func main() {
 	setupReport(config, db)
 	setupCollector(config, db)
 	setupConfigReload(&config, db)
-	setupScript()
+	setupScript("/ka.js")
+	setupScript("/ka.js.php")
 
 	http.ListenAndServe(":10086", nil)
 	select {}
