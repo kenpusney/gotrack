@@ -1,3 +1,4 @@
-kana-go
+kana*
 *.db
 .vscode/
+*.jar

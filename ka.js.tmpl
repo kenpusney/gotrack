@@ -1,0 +1,5 @@
+(function(g){
+e=encodeURIComponent;f=fetch;b="http://{{.Host}}/ka.php?id={{.ID}}&origin="+e(location.href);
+f(b);
+g.ka=function(o){p="";for(k in o){if(o.hasOwnProperty(k)&&k!=='id'&&k!=='origin'){p += ("&" + e(k) + "=" + e(o[k]));}};f(b + p);}
+}(this));

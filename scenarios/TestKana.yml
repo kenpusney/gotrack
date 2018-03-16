@@ -1,0 +1,69 @@
+service:
+  - name: Kana
+    domain: ["kana", "default"]
+    url: http://localhost:10086/
+
+scenario:
+  - name: should get javascript details
+    path: /ka.js?id=hello
+    method: GET
+    expect:
+      status: 200
+      header:
+        Content-Type: "text/javascript"
+    store:
+      body: $response.body.asString()
+
+
+  - name: should successfully add an entry
+    path: /ka.php?id=net.kimleo.blank&age=10
+    method: GET
+    expect:
+      status: 201
+      header:
+        Content-Type: "application/json"
+
+  - name: should fail when id is invalid
+    path: /ka.php?id=net.kimleo.invalid&age=11
+    method: GET
+    expect:
+      status: 400
+      header:
+        Content-Type: "application/json"
+
+
+  - name: should get unauthorized when not authed
+    path: /report.php
+    method: GET
+    expect:
+      status: 401
+
+  - name: should get report when authed
+    path: /report.php?limit=1
+    method: GET
+    headers:
+      Authorization: Basic a2ltbXlsZW86cGFzcw==
+    expect:
+      status: 200
+  
+  - name: should support limit and size
+    path: /report.php?limit=20&skip=10
+    method: GET
+    headers:
+      Authorization: Basic a2ltbXlsZW86cGFzcw==
+    expect:
+      status: 200
+
+  - name: should support reload
+    path: /reload?config=conf.json
+    method: GET
+    headers:
+      Authorization: Basic a2ltbXlsZW86cGFzcw==
+    expect:
+      status: 202
+
+  - name: should error when reload unauthed
+    path: /reload?config=conf.json
+    method: GET
+    expect:
+      status: 401
